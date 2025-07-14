@@ -1,29 +1,11 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="marhansolutions.com" />
-    <title>Paw Metrics - Login</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Quicksand:wght@300..700&display=swap" rel="stylesheet"/>
-
-    <link href="css/all.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    
-  </head>
+<x-header/>
 
 <body class="login-page">
 <main class="float-start w-100">
    <div class="container">
         <aside class="loging-parts01 bg-white col-lg-4 col-xl-4 p-5 mx-auto">
             <a href="#" class="d-table mx-auto mb-4 text-center">
-               <img src="images/logo-mains.svg" alt="logo"/>
+               <img src="{{ asset('assets/images/logo-mains.svg') }}" alt="logo"/>
             </a>
              @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show">
