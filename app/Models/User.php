@@ -57,4 +57,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(TreatmentBoard::class, 'updated_by');
     }
+
+    public function messages()
+{
+    return $this->hasMany(Message::class);
+}
+
 }

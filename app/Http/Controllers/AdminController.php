@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Client;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -13,29 +14,41 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
  public function adminlogin(Request $request) 
- {
-    $credentials = $request->validate([ //first it validates the coming input data
+{
+    $credentials = $request->validate([
         'email' => 'required|email',
         'password' => 'required',
     ]);
 
-    $user = User::where('email', $credentials['email'])->first(); // check database email table with user entered email
-    
-    // Check if user exists and password matches
-    if (!$user || !Hash::check($credentials['password'], $user->password)) { // check user entered password with database password
-        return redirect()->back()->with('error', 'Invalid credentials.');
+    // First: Try login as USER (admin/vet/staff)
+    $user = User::where('email', $credentials['email'])->first();
+
+    if ($user && Hash::check($credentials['password'], $user->password)) {
+        session([
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'role' => $user->role,
+            'is_client' => false
+        ]);
+        return redirect('/dashboard');
     }
 
-    // Set session
-    session([
-        'user_id' => $user->id,
-        'user_name' => $user->name,
-        'role' => $user->role,
-    ]);
+    // Second: Try login as CLIENT (phone as password)
+    $client = Client::where('email', $credentials['email'])->first();
 
-    return redirect('/dashboard');
- }
+    if ($client && $client->phone === $credentials['password']) {
+        session([
+            'user_id' => $client->id,
+            'user_name' => $client->name,
+            'role' => 'client',
+            'is_client' => true
+        ]);
+        return redirect('/dashboard'); // redirect client to chat
+    }
 
+    // If neither worked
+    return back()->with('error', 'Invalid credentials.');
+}
  public function register(Request $request){
     $request->validate([
         'name' => 'required|string|max:255',

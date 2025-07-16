@@ -20,6 +20,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\Analyticscontroller;
 use App\Http\Controllers\SmartLouController;
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\MessageController;
 
 
 // Show registration form
@@ -288,6 +289,13 @@ Route::prefix('reminders')->group(function () {
 Route::get('/analytics', [Analyticscontroller::class, 'analytics'])->name('analytics');
 
 Route::get('/smartlou', [SmartLouController::class, 'index'])->name('smartlou');
+
+
+
+
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+    Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+
 
 });
 

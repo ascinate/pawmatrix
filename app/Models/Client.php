@@ -43,4 +43,10 @@ class Client extends Model
     {
         return $this->hasMany(ClientDocument::class);
     }
+
+    public function messages()
+    {
+    return $this->hasMany(Message::class);
+    }
+
 }
